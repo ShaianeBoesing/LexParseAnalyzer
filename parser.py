@@ -23,6 +23,7 @@ translation = {
     "T": "TERM",
     "U": "TERM'",
     "V": "FACTOR",
+    "Ç": "FACTOR",
     "W": "FCALL",
     "X": "TESTE",
     "Y": "PARLISTCALL",
@@ -50,9 +51,10 @@ ll1_table = [
     ["=='R", None, "∑" , None, None, None, None, "∑",  "<'R", None, ">'R", None, None, None, None, None, None, None, None, None, None, None, ],    # Q
     [None, "T'S", None, None, None, None, None, None, None, None, None, None, None, None, None, "T'S", None, None, None, None, None, None, ],    # R
     ["∑", None, "∑", None, "+'T'S",  None, "-'T'S", "∑", "∑",  None, "∑",  None, None, None, None, None, None, None, None, None, None, None, ],    # S
-    [None, "V'U", None, None, None, None, None, None, None, None, None, None, None, None, None, "V'U", None, None, None, None, None, None, ],    # T
-    ["∑" , None, "∑" ,"*'V'U", "∑" , None, "∑" ,  "∑", "∑" , None, "∑" , None, None, None, None, None, None, None, None, None, None, None, ],    # U
+    [None, "Ç'U", None, None, None, None, None, None, None, None, None, "Ç'U", None, None, None, "Ç'U", None, None, None, None, None, None, ],    # T
+    ["∑" , None, "∑" ,"*'Ç'U", "∑" , None, "∑" ,  "∑", "∑" , None, "∑" , None, None, None, None, None, None, None, None, None, None, None, ],    # U
     [None, "('R')",None, None, None, None, None, None, None, None, None, None, None, None, None, "num", None, None, None, None, None, None, ],    # V
+    [None, "('R')",None, None, None, None, None, None, None, None, None, "id", None, None, None, "num", None, None, None, None, None, None, ],    # Ç
     [None, None, None, None, None, None, None, None, None, None, None, "id'('Y')", None, None, None, None, None, None, None, None, None, None, ],    # W
     ["U'S'Q","('Y')",None,"U'S'Q","U'S'Q", None,"U'S'Q","U'S'Q","U'S'Q", None,"U'S'Q", None, None, None, None, None, None, None, None, None, None, None, ],    # X
     [None, None, "∑" , None, None, None, None, None, None, None, None, "id'Z", None, None, None, None, None, None, None, None, None, None, ],    # Y
