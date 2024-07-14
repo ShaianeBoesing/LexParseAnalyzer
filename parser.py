@@ -61,15 +61,45 @@ ll1_table = [
 
 bind_col_table = ["==", "(", ")", "*", "+", ",", "-", ";", "<", "=", ">", "id", "def", "if", "else", "num", "print", "return", "int", "{", "}", "$"]
 
-# binds = {}
+binds = {}
 
-# for letter_index, letter in enumerate(translation.keys()):
-#     binds[letter] = {}
-#     for way,terminal in zip(ll1_table[letter_index], bind_col_table):
-#         if way is not None:
-#             binds[letter].update({terminal:way})
+for letter_index, letter in enumerate(translation.keys()):
+    binds[letter] = {}
+    for way,terminal in zip(ll1_table[letter_index], bind_col_table):
+        if way is not None:
+            binds[letter].update({terminal:way})
 
-# for bind in binds:
-#     print(f"{bind}:{binds[bind]}")
+for bind in binds:
+    print(f"{bind}:{binds[bind]}")
 
 
+mocked_lexer_output = ["def", "id", "(", "int", "id", ",", "int", "id", ")", "{", "id", "=", "id", "+", "id", ";", "id" ,"=" ,"id" ,"*" ,"id", ";", "return", ";", "}", "$"]
+
+# mocked_lexer_output = ["{","int","id",";","$"]
+tree = ["A", "$"]
+while len(mocked_lexer_output):
+    print(f"{''.join(tree)}   {''.join(mocked_lexer_output)}")
+    if not mocked_lexer_output[0] in binds[tree[0]]:
+        raise Exception("Parser error")
+    origin = tree.pop(0)
+    for variable in reversed((binds[origin][mocked_lexer_output[0]]).split("'")):
+        tree.insert(0, variable)
+    # print(tree)
+    while True:
+        if len(tree) == 0:
+            break
+        if tree[0] == mocked_lexer_output[0]:
+            print(f"{''.join(tree)}   {''.join(mocked_lexer_output)}")
+            del tree[0], mocked_lexer_output[0]
+        elif tree[0] == "∑":
+            print(f"{''.join(tree)}   {''.join(mocked_lexer_output)}")
+            del tree[0]
+        else:
+            break
+
+# def func1 ( int A , int B )
+# {
+#  C = A + B ;
+#  D = B * C ;
+# return ;
+# }
