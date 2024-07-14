@@ -1,13 +1,54 @@
 import re
 
-regex_list = [r'if',
-              r'[a-h]+',
-              r' ']
+regex_list = [
+              r'if',
+              r'else',
+              r'def',
+              r'print',
+              r'return',
+              r'int',
+              r'[0-9]+(.[0-9]+)?',
+              r',',
+              r';',
+              r'\{',
+              r'\}',
+              r'\(',
+              r'\)',
+              r'==',
+              r'=',
+              r'<',
+              r'>',
+              r'\+',
+              r'-',
+              r'\*',
+              r'[a-zA-Z][a-zA-Z0-9]*',
+              r'\s+'
+            ]
 
-regex_action = {'if': "if",
-                '[a-h]+': "id",
-                ' ': "whitespace"}
-
+regex_action = {
+                'if': "if",
+                'else': "else",
+                'def': "def",
+                'print': "print",
+                'return': "return",
+                'int': "int",
+                '[0-9]+(.[0-9]+)?': "num",
+                ',': ",",
+                ';': ";",
+                '\{': "{",
+                '\}': "}",
+                '\(': "(",
+                '\)': ")",
+                '==': "==",
+                '=': "=",
+                '<': "<",
+                '>': ">",
+                '\+': "+",
+                '-': "-",
+                '\*': "*",
+                '[a-zA-Z][a-zA-Z0-9]*': "id",
+                '\s+': "whitespace"
+                }
 # Enforcing precedence
 def first_match(token: str):
     for regex in regex_list:
