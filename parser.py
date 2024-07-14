@@ -80,7 +80,8 @@ mocked_lexer_output = ["def", "id", "(", "int", "id", ",", "int", "id", ")", "{"
 # mocked_lexer_output = ["{","int","id",";","$"]
 tree = ["A", "$"]
 while len(mocked_lexer_output):
-    print(f"{''.join(tree)}   {''.join(mocked_lexer_output)}")
+    printable_tree = [(translation[letter] if letter in translation else letter) for letter in tree[:-1]]
+    print(f"{' '.join(printable_tree)} $ ||||||||||||||||| {' '.join(mocked_lexer_output)}")
     if not mocked_lexer_output[0] in binds[tree[0]]:
         raise Exception("Parser error")
     origin = tree.pop(0)
@@ -88,13 +89,14 @@ while len(mocked_lexer_output):
         tree.insert(0, variable)
     # print(tree)
     while True:
+        printable_tree1 = [(translation[letter] if letter in translation else letter) for letter in tree[:-1]]
         if len(tree) == 0:
             break
         if tree[0] == mocked_lexer_output[0]:
-            print(f"{''.join(tree)}   {''.join(mocked_lexer_output)}")
+            print(f"{' '.join(printable_tree1)} $ ||||||||||||||||| {' '.join(mocked_lexer_output)}")
             del tree[0], mocked_lexer_output[0]
         elif tree[0] == "∑":
-            print(f"{''.join(tree)}   {''.join(mocked_lexer_output)}")
+            print(f"{' '.join(printable_tree1)} $ ||||||||||||||||| {' '.join(mocked_lexer_output)}")
             del tree[0]
         else:
             break
