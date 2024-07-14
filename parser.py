@@ -72,35 +72,55 @@ for letter_index, letter in enumerate(translation.keys()):
             binds[letter].update({terminal:way})
 
 for bind in binds:
-    print(f"{bind}:{binds[bind]}")
+    print(f"{translation[bind]}:{binds[bind]}")
 
 
 mocked_lexer_output = ["def", "id", "(", "int", "id", ",", "int", "id", ")", "{", "id", "=", "id", "+", "id", ";", "id" ,"=" ,"id" ,"*" ,"id", ";", "return", ";", "}", "$"]
+mocked_lexer_output1 = ["if","(","num","==","num",")","{","print","(","id",")","}"]
 
 # mocked_lexer_output = ["{","int","id",";","$"]
-tree = ["A", "$"]
-while len(mocked_lexer_output):
-    printable_tree = [(translation[letter] if letter in translation else letter) for letter in tree[:-1]]
-    print(f"{' '.join(printable_tree)} $ ||||||||||||||||| {' '.join(mocked_lexer_output)}")
-    if not mocked_lexer_output[0] in binds[tree[0]]:
-        raise Exception("Parser error")
-    origin = tree.pop(0)
-    for variable in reversed((binds[origin][mocked_lexer_output[0]]).split("'")):
-        tree.insert(0, variable)
-    # print(tree)
-    while True:
-        printable_tree1 = [(translation[letter] if letter in translation else letter) for letter in tree[:-1]]
-        if len(tree) == 0:
-            break
-        if tree[0] == mocked_lexer_output[0]:
-            print(f"{' '.join(printable_tree1)} $ ||||||||||||||||| {' '.join(mocked_lexer_output)}")
-            del tree[0], mocked_lexer_output[0]
-        elif tree[0] == "∑":
-            print(f"{' '.join(printable_tree1)} $ ||||||||||||||||| {' '.join(mocked_lexer_output)}")
-            del tree[0]
-        else:
-            break
 
+def is_lenguage_valid(lexer_output, tree=["A", "$"], prints = True):
+    while len(lexer_output):
+        printable_tree = [(translation[letter] if letter in translation else letter) for letter in tree[:-1]]
+        if prints:
+            print(f"{' '.join(printable_tree)} $ ||||||||||||||||| {' '.join(lexer_output)}")
+        if not lexer_output[0] in binds[tree[0]]:
+            return False
+        origin = tree.pop(0)
+        if isinstance(origin, list):
+            print(11111111111)
+            for possible_output in origin:
+                aux_tree = tree[:]
+                for variable in reversed((binds[possible_output][lexer_output[0]]).split("'")):
+                    aux_tree.insert(0, variable)
+                is_valid = is_lenguage_valid(lexer_output, aux_tree, False)
+                if is_valid:
+                    is_lenguage_valid(lexer_output, aux_tree, True)
+                    return True
+            else:
+                return False
+
+        for variable in reversed((binds[origin][lexer_output[0]]).split("'")):
+            tree.insert(0, variable)
+        # print(tree)
+        while True:
+            printable_tree1 = [(translation[letter] if letter in translation else letter) for letter in tree[:-1]]
+            if len(tree) == 0:
+                break
+            if tree[0] == lexer_output[0]:
+                if prints:
+                    print(f"{' '.join(printable_tree1)} $ ||||||||||||||||| {' '.join(lexer_output)}")
+                del tree[0], lexer_output[0]
+            elif tree[0] == "∑":
+                if prints:
+                    print(f"{' '.join(printable_tree1)} $ ||||||||||||||||| {' '.join(lexer_output)}")
+                del tree[0]
+            else:
+                break
+    return True
+
+is_lenguage_valid(mocked_lexer_output1)
 # def func1 ( int A , int B )
 # {
 #  C = A + B ;
