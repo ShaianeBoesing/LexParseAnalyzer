@@ -35,20 +35,21 @@ regex_action = {
                 '[0-9]+(.[0-9]+)?': "num",
                 ',': ",",
                 ';': ";",
-                '\{': "{",
-                '\}': "}",
-                '\(': "(",
-                '\)': ")",
+                r'\{': "{",
+                r'\}': "}",
+                r'\(': "(",
+                r'\)': ")",
                 '==': "==",
                 '=': "=",
                 '<': "<",
                 '>': ">",
-                '\+': "+",
+                r'\+': "+",
                 '-': "-",
-                '\*': "*",
+                r'\*': "*",
                 '[a-zA-Z][a-zA-Z0-9]*': "id",
-                '\s+': "whitespace"
+                r'\s+': "whitespace"
                 }
+
 
 # Enforcing precedence
 def first_match(token: str):
@@ -58,13 +59,14 @@ def first_match(token: str):
     else:
         return None
 
+
 def lexer(file_name):
     # Para os Ids
     current_token_string = ''
 
     with open(file_name) as fd:
         file = fd.read()
-        if file[len(file) -1] == '\n':
+        if file[len(file) - 1] == '\n':
             file = file[:-1]
 
         output = []
@@ -85,19 +87,18 @@ def lexer(file_name):
                 current_token_string = ''
                 character_counter -= 1
                 was_matched = False
-            elif matched_regex is not None and not(was_matched):
+            elif matched_regex is not None and not (was_matched):
                 was_matched = True
 
             character_counter += 1
 
         # Matching the remaining tokens
-        if first_match(current_token_string) != None:
+        if first_match(current_token_string) is not None:
             token = regex_action[first_match(current_token_string)]
             if token != "whitespace":
                 output.append(token)
             output.append("$")
-            print(output)
+            return output
+            # print(output)
         else:
             print("Error")
-
-lexer("arquivo.txt")

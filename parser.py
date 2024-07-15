@@ -71,8 +71,8 @@ for letter_index, letter in enumerate(translation.keys()):
         if way is not None:
             ll1_table_dict[letter].update({terminal:way})
 
-for bind in ll1_table_dict:
-    print(f"{translation[bind]}:{ll1_table_dict[bind]}")
+# for bind in ll1_table_dict:
+#     print(f"{translation[bind]}:{ll1_table_dict[bind]}")
 
 
 mocked_lexer_output = ["def", "id", "(", "int", "id", ",", "int", "id", ")", "{", "id", "=", "id", "+", "id", ";", "id" ,"=" ,"id" ,"*" ,"id", ";", "return", ";", "}", "$"]
@@ -122,6 +122,8 @@ def is_lenguage_valid(lexer_output, tree=["A", "$"], prints = True):
             for variable in reversed((ll1_table_dict[origin][lexer_output[0]]).split("'")):
                 tree.insert(0, variable)
 
+        elif tree[0] != lexer_output[0]:
+            return False
         # while true necessário para remover terminais com tokens caso há multiplos tokens em sequencia a serem eliminados.
         while True:
             printable_tree1 = [(translation[letter] if letter in translation else letter) for letter in tree[:-1]]
@@ -138,12 +140,3 @@ def is_lenguage_valid(lexer_output, tree=["A", "$"], prints = True):
             else: # Caso não eliminar nenhum token, significa que pode passar para proxima etapa do parsing
                 break
     return True
-
-is_valid = is_lenguage_valid(mocked_lexer_output1)
-
-# def func1 ( int A , int B )
-# {
-#  C = A + B ;
-#  D = B * C ;
-# return ;
-# }
