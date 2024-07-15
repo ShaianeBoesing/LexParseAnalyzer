@@ -47,7 +47,7 @@ ll1_table = [
     [None, None, None, None, None, None, None, "∑" , None, None, None, "∑" , None, "∑" ,["∑","else'G"], None, "∑", "∑", "∑", "∑", "∑", "∑", ],    # M
     [None, None, None, None, None, None, None, "G'O", None, None, None, "G'O", None, "G'O", None, None, "G'O", "G'O", "G'O", "G'O", None, None, ],    # N
     [None, None, None, None, None, None, None, "N", None, None, None,  "N", None,  "N", None, None, "N", "N", "N", "N", "∑", None, ],    # O
-    [None, "R'Q", None, None, None, None, None, None, None, None, None, None, None, None, None, "R'Q", None, None, None, None, None, None, ],    # P
+    [None, "R'Q", None, None, None, None, None, None, None, None, None, "R'Q", None, None, None, "R'Q", None, None, None, None, None, None, ],    # P
     ["=='R", None, "∑" , None, None, None, None, "∑",  "<'R", None, ">'R", None, None, None, None, None, None, None, None, None, None, None, ],    # Q
     [None, "T'S", None, None, None, None, None, None, None, None, None, "T'S", None, None, None, "T'S", None, None, None, None, None, None, ],    # R
     ["∑", None, "∑", None, "+'T'S",  None, "-'T'S", "∑", "∑",  None, "∑",  None, None, None, None, None, None, None, None, None, None, None, ],    # S
@@ -76,7 +76,7 @@ for letter_index, letter in enumerate(translation.keys()):
 
 
 mocked_lexer_output = ["def", "id", "(", "int", "id", ",", "int", "id", ")", "{", "id", "=", "id", "+", "id", ";", "id" ,"=" ,"id" ,"*" ,"id", ";", "return", ";", "}", "$"]
-mocked_lexer_output1 = ["if","(","num","==","num",")","print","(","id",")", ";", "else", ";", "$"]
+mocked_lexer_output1 = ["if","(","id","==","id",")","print","(","id",")", ";", "else", ";", "$"]
 
 # mocked_lexer_output = ["{","int","id",";","$"]
 
