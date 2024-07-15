@@ -76,7 +76,7 @@ for bind in binds:
 
 
 mocked_lexer_output = ["def", "id", "(", "int", "id", ",", "int", "id", ")", "{", "id", "=", "id", "+", "id", ";", "id" ,"=" ,"id" ,"*" ,"id", ";", "return", ";", "}", "$"]
-mocked_lexer_output1 = ["if","(","num","==","num",")","{","print","(","id",")", ";","}", "$"]
+mocked_lexer_output1 = ["if","(","num","==","num",")","print","(","id",")", ";", "else", ";", "$"]
 
 # mocked_lexer_output = ["{","int","id",";","$"]
 
@@ -85,24 +85,27 @@ def is_lenguage_valid(lexer_output, tree=["A", "$"], prints = True):
         printable_tree = [(translation[letter] if letter in translation else letter) for letter in tree[:-1]]
         if prints:
             print(f"{' '.join(printable_tree)} $ ||||||||||||||||| {' '.join(lexer_output)}")
-        if not lexer_output[0] in binds[tree[0]]:
-            return False
-        origin = tree.pop(0)
-        if isinstance(origin, list):
-            print(11111111111)
-            for possible_output in origin:
-                aux_tree = tree[:]
-                for variable in reversed((binds[possible_output][lexer_output[0]]).split("'")):
-                    aux_tree.insert(0, variable)
-                is_valid = is_lenguage_valid(lexer_output, aux_tree, False)
-                if is_valid:
-                    is_lenguage_valid(lexer_output, aux_tree, True)
-                    return True
-            else:
+        if tree[0] in translation.keys() or tree[0] == "$":
+            if (tree[0] == "$" and len(lexer_output)> 1) or (not lexer_output[0] in binds[tree[0]]):
                 return False
+            origin = tree.pop(0)
+            if isinstance(binds[origin][lexer_output[0]], list):
+                for possible_output in binds[origin][lexer_output[0]]:
+                    aux_tree = tree[:]
+                    aux_tree_to_print = tree[:]
+                    aux_lexer_output_to_print = lexer_output[:]
+                    for variable in reversed(possible_output.split("'")):
+                        aux_tree.insert(0, variable)
+                        aux_tree_to_print.insert(0, variable)
+                    is_valid = is_lenguage_valid(lexer_output, aux_tree, False)
+                    if is_valid:
+                        is_lenguage_valid(aux_lexer_output_to_print, aux_tree_to_print, True)
+                        return True
+                else:
+                    return False
 
-        for variable in reversed((binds[origin][lexer_output[0]]).split("'")):
-            tree.insert(0, variable)
+            for variable in reversed((binds[origin][lexer_output[0]]).split("'")):
+                tree.insert(0, variable)
         # print(tree)
         while True:
             printable_tree1 = [(translation[letter] if letter in translation else letter) for letter in tree[:-1]]
@@ -120,7 +123,8 @@ def is_lenguage_valid(lexer_output, tree=["A", "$"], prints = True):
                 break
     return True
 
-is_lenguage_valid(mocked_lexer_output1)
+is_valid = is_lenguage_valid(mocked_lexer_output1)
+print(is_valid)
 # def func1 ( int A , int B )
 # {
 #  C = A + B ;
