@@ -1,14 +1,3 @@
-# try except no dict é o que vai dar erros léxicos
-# erros léxicos: ç, 89.z, essencialmente estados que não são de aceitação
-# Tem dois try except, um na hora de ver a ação, esse vai mostrar erros em
-# estados que não são de aceitação, e outro na hora do mapeamento do input para
-# index na transition_table, erro de chave em outro dicionário nesse caso, e
-# implica em um símbolo não existente no alfabeto. AMbos os casos devem parar a
-# análise léxica e retornar erro.
-# Essencialmente ou token mal formatado, ou símbolo inválido.
-# Limitações, '.' não é caracter válido fora de num. Não aceitamos expressões no
-# formato 0.3E-6 (exponenciais). Tudo isso foi visando a simplicidade.
-
 
 character_to_index = {"a": 0, "b": 1, "c": 2, "d": 3, "e": 4, "f": 5, "g": 6, "h": 7,
                       "i": 8, "j": 9, "k": 10, "l": 11, "m": 12, "n": 13, "o": 14,
