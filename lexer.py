@@ -1,104 +1,92 @@
-import re
-
-regex_list = [
-              r'if',
-              r'else',
-              r'def',
-              r'print',
-              r'return',
-              r'int',
-              r'[0-9]+(.[0-9]+)?',
-              r',',
-              r';',
-              r'\{',
-              r'\}',
-              r'\(',
-              r'\)',
-              r'==',
-              r'=',
-              r'<',
-              r'>',
-              r'\+',
-              r'-',
-              r'\*',
-              r'[a-zA-Z][a-zA-Z0-9]*',
-              r'\s+'
-            ]
-
-regex_action = {
-                'if': "if",
-                'else': "else",
-                'def': "def",
-                'print': "print",
-                'return': "return",
-                'int': "int",
-                '[0-9]+(.[0-9]+)?': "num",
-                ',': ",",
-                ';': ";",
-                r'\{': "{",
-                r'\}': "}",
-                r'\(': "(",
-                r'\)': ")",
-                '==': "==",
-                '=': "=",
-                '<': "<",
-                '>': ">",
-                r'\+': "+",
-                '-': "-",
-                r'\*': "*",
-                '[a-zA-Z][a-zA-Z0-9]*': "id",
-                r'\s+': "whitespace"
-                }
+from DFA_table import transition_table, character_to_index
 
 
-# Enforcing precedence
-def first_match(token: str):
-    for regex in regex_list:
-        if re.fullmatch(regex, token):
-            return regex
-    else:
-        return None
+
+acceptance_state_action = {2: "id",
+                           3: "id",
+                           4: "if",
+                           5: "whitespace",
+                           6: "num",
+                           8: "num",
+                           9: "id",
+                           10: "id",
+                           11: "id",
+                           12: "else",
+                           13: "id",
+                           14: "id",
+                           15: "id",
+                           16: "id",
+                           17: "print",
+                           18: "id",
+                           19: "id",
+                           20: "id",
+                           21: "id",
+                           22: "id",
+                           23: "return",
+                           24: "id",
+                           25: "int",
+                           26: "id",
+                           27: "id",
+                           28: "def",
+                           29: ",",
+                           30: ";",
+                           31: "{",
+                           32: "}",
+                           33: "(",
+                           34: ")",
+                           35: "=",
+                           36: "==",
+                           37: "<",
+                           38: ">",
+                           39: "+",
+                           40: "-",
+                           41: "*"}
 
 
-def lexer(file_name):
-    # Para os Ids
+with open("arquivo.txt") as fd:
+    file = fd.read()
+    if file[len(file) -1] == '\n':
+        file = file[:-1]
+
+    # Main logic
     current_token_string = ''
+    character_counter = 0
+    last_acceptance_state = 0
+    current_state = 1
+    while character_counter < len(file):
+        ch = file[character_counter]
 
-    with open(file_name) as fd:
-        file = fd.read()
-        if file[len(file) - 1] == '\n':
-            file = file[:-1]
+        # Realize uma transição
+        try:
+            current_state = transition_table[current_state][character_to_index[ch]]
+        except:
+            print("Erro Léxico, caracter inválido econtrado: ", ch)
+            exit(0)
+            
 
-        output = []
-        character_counter = 0
-        was_matched = False
-        while character_counter < len(file):
-            ch = file[character_counter]
-
+        # O estado 0 implica a hora de tokenizar o input ou dar erro se o estado
+        # atual não for de aceitação
+        if current_state == 0:
+            try:
+                if acceptance_state_action[last_acceptance_state] != "whitespace":
+                    print(acceptance_state_action[last_acceptance_state])
+                current_state = 1
+                current_token_string = ""
+            except:
+                print("Erro Léxico, token inválido encontrado: ", current_token_string)
+                exit(0)
+        else:
             current_token_string += ch
-            matched_regex = first_match(current_token_string)
-
-            if matched_regex is None and was_matched:
-                matched_regex = first_match(current_token_string[:-1])
-                token = regex_action[matched_regex]
-                if token != "whitespace":
-                    output.append(token)
-
-                current_token_string = ''
-                character_counter -= 1
-                was_matched = False
-            elif matched_regex is not None and not (was_matched):
-                was_matched = True
-
             character_counter += 1
 
-        # Matching the remaining tokens
-        if first_match(current_token_string) is not None:
-            token = regex_action[first_match(current_token_string)]
-            if token != "whitespace":
-                output.append(token)
-            output.append("$")
-            return output
-            # print(output)
-        else:
-            print("Error")
+        # Se for um estado de aceitação, então ele é o mais novo estado de
+        # aceitação, o que teria o maior input, respeitando o maximal munch
+        if current_state in acceptance_state_action:
+            last_acceptance_state = current_state
+
+
+    # Matching the remaining token
+    if current_state in acceptance_state_action:
+        if acceptance_state_action[last_acceptance_state] != "whitespace":
+            print(acceptance_state_action[last_acceptance_state])
+
