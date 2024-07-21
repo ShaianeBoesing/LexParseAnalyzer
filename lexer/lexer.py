@@ -1,3 +1,5 @@
+# Integrantes: Marcus Vinicius (21201474), Matheus Lafeta (21202339) e Shaiane Boesing (21202341)
+
 from lexer.DFA_table import transition_table, character_to_index
 
 

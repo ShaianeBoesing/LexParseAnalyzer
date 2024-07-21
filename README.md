@@ -1,3 +1,5 @@
+### Integrantes: Marcus Vinicius (21201474), Matheus Lafeta (21202339) e Shaiane Boesing (21202341)
+
 # Instruções para utilizar o LexParseAnalyzer LSI-2024-1
 
 Requisitos:
