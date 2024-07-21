@@ -42,51 +42,57 @@ acceptance_state_action = {2: "id",
                            40: "-",
                            41: "*"}
 
+def lexer(file_name):
+    output = []
+    with open(file_name) as fd:
+        file = fd.read()
+        if file[len(file) -1] == '\n':
+            file = file[:-1]
 
-with open("arquivo.txt") as fd:
-    file = fd.read()
-    if file[len(file) -1] == '\n':
-        file = file[:-1]
+        # Main logic
+        current_token_string = ''
+        character_counter = 0
+        last_acceptance_state = 0
+        current_state = 1
+        while character_counter < len(file):
+            ch = file[character_counter]
 
-    # Main logic
-    current_token_string = ''
-    character_counter = 0
-    last_acceptance_state = 0
-    current_state = 1
-    while character_counter < len(file):
-        ch = file[character_counter]
-
-        # Realize uma transição
-        try:
-            current_state = transition_table[current_state][character_to_index[ch]]
-        except:
-            print("Erro Léxico, caracter inválido econtrado: ", ch)
-            exit(0)
-            
-
-        # O estado 0 implica a hora de tokenizar o input ou dar erro se o estado
-        # atual não for de aceitação
-        if current_state == 0:
+            # Realize uma transição
             try:
-                if acceptance_state_action[last_acceptance_state] != "whitespace":
-                    print(acceptance_state_action[last_acceptance_state])
-                current_state = 1
-                current_token_string = ""
+                current_state = transition_table[current_state][character_to_index[ch]]
             except:
-                print("Erro Léxico, token inválido encontrado: ", current_token_string)
+                print("Erro Léxico, caracter inválido econtrado: ", ch)
                 exit(0)
-        else:
-            current_token_string += ch
-            character_counter += 1
+                
 
-        # Se for um estado de aceitação, então ele é o mais novo estado de
-        # aceitação, o que teria o maior input, respeitando o maximal munch
+            # O estado 0 implica a hora de tokenizar o input ou dar erro se o estado
+            # atual não for de aceitação
+            if current_state == 0:
+                try:
+                    if acceptance_state_action[last_acceptance_state] != "whitespace":
+                        token = acceptance_state_action[last_acceptance_state]
+                        output.append(token)
+                        print(token)
+                    current_state = 1
+                    current_token_string = ""
+                except:
+                    print("Erro Léxico, token inválido encontrado: ", current_token_string)
+                    exit(0)
+            else:
+                current_token_string += ch
+                character_counter += 1
+
+            # Se for um estado de aceitação, então ele é o mais novo estado de
+            # aceitação, o que teria o maior input, respeitando o maximal munch
+            if current_state in acceptance_state_action:
+                last_acceptance_state = current_state
+
+
+        # Matching the remaining token
         if current_state in acceptance_state_action:
-            last_acceptance_state = current_state
+            if acceptance_state_action[last_acceptance_state] != "whitespace":
+                token = acceptance_state_action[last_acceptance_state]
+                output.append(token)
+                print(token)
 
-
-    # Matching the remaining token
-    if current_state in acceptance_state_action:
-        if acceptance_state_action[last_acceptance_state] != "whitespace":
-            print(acceptance_state_action[last_acceptance_state])
-
+    return output
