@@ -1,5 +1,4 @@
-from DFA_table import transition_table, character_to_index
-
+from lexer.DFA_table import transition_table, character_to_index
 
 
 acceptance_state_action = {2: "id",
