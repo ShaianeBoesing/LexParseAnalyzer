@@ -1,0 +1,19 @@
+def largerThan(int firstNumber, int secondNumber){
+  if(firstNumber > secondNumber)
+    print 1;
+  else
+    print 0;
+
+  return;
+}
+
+def principal(){
+  int x;
+  int y;
+
+  x =150+50;
+  y = 45a;
+
+  largerThan(x, y);
+  return;
+}

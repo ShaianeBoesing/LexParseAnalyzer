@@ -1,0 +1,22 @@
+def add(int x, int y){
+  int z;
+  z = x + y;
+  return;
+}
+
+def sub(int x, int y){
+  int z;
+  z = x - y;
+  return;
+}
+
+def main(){
+  int addResult;
+  int subResult;
+  int £ = 12;
+  int ç = 4;
+
+  addResult = add($, ç);
+  subResult = sub($, ç);
+  return;
+}

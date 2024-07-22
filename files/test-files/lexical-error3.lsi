@@ -1,0 +1,23 @@
+def fatorial(int numero){
+  if(numero == 0)
+    output = 1;
+    return;
+
+  output = numero * fatorial(numero - 1);
+  return;
+}
+
+def principal(){
+
+  /*comentario importante sobre operacao abaixo */
+  int x;
+  x = 12;
+
+  /* comentario nao fechado corretamente
+
+  int y;
+  y = fatorial(x);
+  print y;
+
+  return;
+}
