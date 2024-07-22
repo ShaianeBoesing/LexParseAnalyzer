@@ -1,6 +1,7 @@
 # Integrantes: Marcus Vinicius (21201474), Matheus Lafeta (21202339) e Shaiane Boesing (21202341)
 
 # flake8: noqa
+# pylint:disable= all
 
 translation = {
     "A": "MAIN",
@@ -129,7 +130,7 @@ def is_lenguage_valid(lexer_output, tree=["A", "$"], prints = True):
         # while true necessário para remover terminais com tokens caso há multiplos tokens em sequencia a serem eliminados.
         while True:
             printable_tree1 = [(translation[letter] if letter in translation else letter) for letter in tree[:-1]]
-            if len(tree) == 0: # Caso não há mais nada na árvore significa que acabou o parsing
+            if len(tree) == 0 or len(lexer_output) == 0: # Caso não há mais nada na árvore ou no lexer_output significa que acabou o parsing
                 break
             if tree[0] == lexer_output[0]: # Caso a variavel mais a esquerda for igual ao token do lexer mais a esquerda se faz a eliminação
                 if prints:
