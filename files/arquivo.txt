@@ -1,28 +1,66 @@
-def func1 ( int A , int B )
+def isValidTriangle ()
 {
-   C = A + B;
-   D = B * C;
-  return;
-}
-
-def principal ()
-{
+  int A;
+  int B;
   int C;
-  int D;
-  int R;
+  A = 3;
   C = 4;
   D = 5;
-  R = func1 (C, D);
-  if (0 > 1) {
-    print(4);
-    if (A) {
-      if (A)
+
+  if (A < 0)
+    return;
+  if (B < 0)
+    return;
+  if (C < 0)
+    return;
+  if (A == 0)
+    return;
+  if (B == 0)
+    return;
+  if (C == 0)
+    return;
+
+  if (A > B + C)
+    return;
+  if (B > A + C)
+    return;
+  if (C > B + A)
+    return;
+
+
+  if (B > C){
+    if (A < B - C)
+      return;
+  } else {
+    if (C == B){
       ;
-      if (A)
-      ;
-      else 
-      ;
-    }else;
+    }
+    else
+      return;
   }
+
+  if (A > C){
+    if (B < A - C)
+      return;
+  } else {
+    if (A == C){
+      ;
+    }
+    else
+      return;
+  }
+
+  if (A > B){
+    if (C < A - B)
+      return;
+  } else {
+    if (A == B){
+      ;
+    }
+    else
+      return;
+  }
+
+  print(1);
   return;
 }
