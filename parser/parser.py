@@ -37,7 +37,7 @@ ll1_table = [
 #      ==    (      )     *     +    ,      -     ;     <     =    >     id   def    if   else  num  print return int   {     }     $
     [None, None, None, None, None, None, None, "G",  None, None, None, "G",  "B",  "G",  None, None, "G",  "G",  "G",  "G",  None, "∑"   ],    # A
     [None, None, None, None, None, None, None, None, None, None, None, None, "D'C", None, None, None, None, None, None, None, None, None, ],    # B
-    [None, None, None, None, None, None, None, None, None, None, None, None, "D" , None, None, None, None, None, None, None, None, "∑" , ],    # C
+    [None, None, None, None, None, None, None, None, None, None, None, None, "B" , None, None, None, None, None, None, None, None, "∑" , ],    # C
     [None, None, None, None, None, None, None, None, None, None, None, None, "def'id'('E')'{'N'}",None, None, None, None, None, None, None, None, None, ],    # D
     [None, None, "∑" , None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, "int'id'F", None, None, None, ],    # E
     [None, None, "∑" , None, None, ",'E", None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, ],    # F
