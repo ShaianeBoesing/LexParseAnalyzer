@@ -83,7 +83,7 @@ mocked_lexer_output1 = ["if","(","id","==","id",")","print","(","id",")", ";", "
 
 # mocked_lexer_output = ["{","int","id",";","$"]
 
-def is_lenguage_valid(lexer_output, tree=["A", "$"], prints = True):
+def is_lenguage_valid(lexer_output, tree=["A", "$"], prints = True, recursion_level=0):
     while len(lexer_output):
         if prints:
             printable_tree = [(translation[letter] if letter in translation else letter) for letter in tree[:-1]]
@@ -113,9 +113,10 @@ def is_lenguage_valid(lexer_output, tree=["A", "$"], prints = True):
                         aux_tree.insert(0, variable)
                         aux_tree_to_print.insert(0, variable)
 
-                    is_valid = is_lenguage_valid(lexer_output, aux_tree, False) # Roda a recorrencia com a árvore atual e a lista de token do lexer atual
+                    is_valid = is_lenguage_valid(lexer_output, aux_tree, False, recursion_level+1) # Roda a recorrencia com a árvore atual e a lista de token do lexer atual
                     if is_valid:
-                        is_lenguage_valid(aux_lexer_output_to_print, aux_tree_to_print, True) # Se for válido, rodará a função novamente printando o passo a passo do parser para leitura
+                        if recursion_level==0:
+                            is_lenguage_valid(aux_lexer_output_to_print, aux_tree_to_print, True) # Se for válido, rodará a função novamente printando o passo a passo do parser para leitura
                         return True
 
                 else:
