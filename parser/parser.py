@@ -104,7 +104,6 @@ def is_language_valid(lexer_output, tree=["A", "$"], prints = True, recursion_le
             # Caso for uma lista, significa que há ambiguidade, ou seja precisa passar em mais de um caminho para o mesmo não terminal.
             if isinstance(ll1_table_dict[origin][lexer_output[0]], list):
                 for possible_output in ll1_table_dict[origin][lexer_output[0]]:
-                    print("##", recursion_level)
                     aux_tree = tree[:] # arvore de auxilio para não modificar a original
                     aux_tree_to_print = tree[:] # arvore de auxilio para printar a correta caso seja uma arvore válida
                     aux_lexer_output_to_print = lexer_output[:] # lista de tokens auxiliar para printar caso seja o caminho correto
@@ -114,11 +113,10 @@ def is_language_valid(lexer_output, tree=["A", "$"], prints = True, recursion_le
                         aux_tree.insert(0, variable)
                         aux_tree_to_print.insert(0, variable)
 
-                    is_valid = is_lenguage_valid(lexer_output, aux_tree, True, recursion_level+1) # Roda a recorrencia com a árvore atual e a lista de token do lexer atual
+                    is_valid = is_lenguage_valid(lexer_output, aux_tree, False, recursion_level+1) # Roda a recorrencia com a árvore atual e a lista de token do lexer atual
                     if is_valid:
                         if recursion_level==0:
-                            pass
-                            # is_lenguage_valid(aux_lexer_output_to_print, aux_tree_to_print, True) # Se for válido, rodará a função novamente printando o passo a passo do parser para leitura
+                            is_lenguage_valid(aux_lexer_output_to_print, aux_tree_to_print, True) # Se for válido, rodará a função novamente printando o passo a passo do parser para leitura
                         return True
 
                 else:
