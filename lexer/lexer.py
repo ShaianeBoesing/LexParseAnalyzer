@@ -53,23 +53,39 @@ def lexer(file_name):
             file = file[:-1]
 
         # Main logic
-        current_token_string = ''
+        line_counter = 1
+        column_counter = 0
         character_counter = 0
+
+        current_token_string = ''
         current_state = 1
         next_state = 0
+
         while character_counter < len(file):
             ch = file[character_counter]
+
+            # Deixar contagem de linha a cargo do autômato seria consideravelmente mais complexo
+            column_counter += 1
+            if ch == "\n":
+                line_counter += 1
+                column_counter = 0
 
             # Realize uma transição
             if ch in character_to_index:
                 next_state = transition_table[current_state][character_to_index[ch]]
             else:
-                print("Erro Léxico, caracter inválido econtrado: ", ch)
+                print(f"Erro Léxico. Linha: {line_counter}, Coluna: {column_counter}. Caracter inválido econtrado: ", ch)
                 exit(0)
                 
             # O estado 0 implica a hora de tokenizar o input ou dar erro se o estado
             # atual não for de aceitação
             if next_state == 0:
+                # Por deixar de incrementar o character_counter, ele lerá \n duas vezes
+                column_counter -= 1
+                if ch == "\n":
+                    line_counter -= 1
+                    column_counter = 0
+
                 if current_state in acceptance_state_action:
                     if acceptance_state_action[current_state] not in ["whitespace", "commentary"]:
                         token = acceptance_state_action[current_state]
@@ -78,7 +94,7 @@ def lexer(file_name):
                     current_state = 1
                     current_token_string = ""
                 else:
-                    print("Erro Léxico, token inválido encontrado: ", current_token_string)
+                    print(f"Erro Léxico. Linha: {line_counter}, Coluna: {column_counter}. Token inválido encontrado: ", current_token_string)
                     exit(0)
             else:
                 current_state = next_state
@@ -93,7 +109,7 @@ def lexer(file_name):
                 output.append(token)
                 print(token, end=" ")
         else:
-            print("Erro Léxico, token inválido encontrado: ", current_token_string)
+            print(f"Erro Léxico. Linha: {line_counter}, Coluna: {column_counter}. Token inválido encontrado: ", current_token_string)
             exit(0)
     print()
     return output
