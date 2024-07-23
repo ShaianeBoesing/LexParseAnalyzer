@@ -87,7 +87,7 @@ def is_language_valid(lexer_output, tree=["A", "$"], prints = True, recursion_le
     while len(lexer_output):
         if prints:
             printable_tree = [(translation[letter] if letter in translation else letter) for letter in tree[:-1]]
-            print(f"{' '.join(printable_tree)} $ ||||||||||||||||| {' '.join(lexer_output)}")
+        #     print(f"{' '.join(printable_tree)} $ ||||||||||||||||| {' '.join(lexer_output)}")
 
         # Primeiro verifica se o que recebeu na arvore está presente na lista de Variáveis não terminais ou é $
         # Caso esteja presente passa para executar esse bloco de tradução de Variável para produção possível.
@@ -96,6 +96,8 @@ def is_language_valid(lexer_output, tree=["A", "$"], prints = True, recursion_le
             # Caso a arvore esteja em $ e o output do lexer não estiver zerado, quer dizer que ainda há terminais a serem eliminados, ou seja o programa é inválido.
             # Caso o primeiro output do lexer não estiver em um output permitido pela tabela ll(1), significa que o programa é inválido.
             if (tree[0] == "$" and len(lexer_output)> 1) or (not lexer_output[0] in ll1_table_dict[tree[0]]):
+                if recursion_level==0:
+                    print(f"{' '.join(printable_tree)} $ ||||||||||||||||| {' '.join(lexer_output)}")
                 return False
 
             # Remove a primeira variável da arvore para trabalho.
@@ -113,13 +115,15 @@ def is_language_valid(lexer_output, tree=["A", "$"], prints = True, recursion_le
                         aux_tree.insert(0, variable)
                         aux_tree_to_print.insert(0, variable)
 
-                    is_valid = is_language_valid(lexer_output, aux_tree, False, recursion_level+1) # Roda a recorrencia com a árvore atual e a lista de token do lexer atual
+                    is_valid = is_language_valid(lexer_output, aux_tree, True, recursion_level+1) # Roda a recorrencia com a árvore atual e a lista de token do lexer atual
                     if is_valid:
                         if recursion_level==0:
                             is_language_valid(aux_lexer_output_to_print, aux_tree_to_print, True) # Se for válido, rodará a função novamente printando o passo a passo do parser para leitura
                         return True
 
                 else:
+                    if recursion_level==0:
+                        print(f"{' '.join(printable_tree)} $ ||||||||||||||||| {' '.join(lexer_output)}")
                     return False # Caso não há um retorno válido a partir da ambiguidade, significa que não é um programa válido
 
             # A cada não terminal ou terminal do caminho possível a partir da origin, se adiciona a arvore na ordem correspondente.
@@ -127,6 +131,8 @@ def is_language_valid(lexer_output, tree=["A", "$"], prints = True, recursion_le
                 tree.insert(0, variable)
 
         elif tree[0] != lexer_output[0] and tree[0] != "∑":
+            if recursion_level==0:
+                print(f"{' '.join(printable_tree)} $ ||||||||||||||||| {' '.join(lexer_output)}")
             return False
         # while true necessário para remover terminais com tokens caso há multiplos tokens em sequencia a serem eliminados.
         while True:
@@ -134,12 +140,12 @@ def is_language_valid(lexer_output, tree=["A", "$"], prints = True, recursion_le
             if len(tree) == 0 or len(lexer_output) == 0: # Caso não há mais nada na árvore ou no lexer_output significa que acabou o parsing
                 break
             if tree[0] == lexer_output[0]: # Caso a variavel mais a esquerda for igual ao token do lexer mais a esquerda se faz a eliminação
-                if prints:
-                    print(f"{' '.join(printable_tree1)} $ ||||||||||||||||| {' '.join(lexer_output)}")
+                # if prints:
+                    # print(f"{' '.join(printable_tree1)} $ ||||||||||||||||| {' '.join(lexer_output)}")
                 del tree[0], lexer_output[0]
             elif tree[0] == "∑": # Caso for a string vazia, se faz a eliminação
-                if prints:
-                    print(f"{' '.join(printable_tree1)} $ ||||||||||||||||| {' '.join(lexer_output)}")
+                # if prints:
+                    # print(f"{' '.join(printable_tree1)} $ ||||||||||||||||| {' '.join(lexer_output)}")
                 del tree[0]
             else: # Caso não eliminar nenhum token, significa que pode passar para proxima etapa do parsing
                 break
