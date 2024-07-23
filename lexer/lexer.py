@@ -95,6 +95,6 @@ def lexer(file_name):
         else:
             print("Erro Léxico, token inválido encontrado: ", current_token_string)
             exit(0)
-
+    print()
     return output
 

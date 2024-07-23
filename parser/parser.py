@@ -83,7 +83,7 @@ mocked_lexer_output1 = ["if","(","id","==","id",")","print","(","id",")", ";", "
 
 # mocked_lexer_output = ["{","int","id",";","$"]
 
-def is_lenguage_valid(lexer_output, tree=["A", "$"], prints = True, recursion_level=0):
+def is_language_valid(lexer_output, tree=["A", "$"], prints = True, recursion_level=0):
     while len(lexer_output):
         if prints:
             printable_tree = [(translation[letter] if letter in translation else letter) for letter in tree[:-1]]
