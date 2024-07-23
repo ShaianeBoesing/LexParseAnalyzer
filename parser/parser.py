@@ -113,10 +113,10 @@ def is_language_valid(lexer_output, tree=["A", "$"], prints = True, recursion_le
                         aux_tree.insert(0, variable)
                         aux_tree_to_print.insert(0, variable)
 
-                    is_valid = is_lenguage_valid(lexer_output, aux_tree, False, recursion_level+1) # Roda a recorrencia com a árvore atual e a lista de token do lexer atual
+                    is_valid = is_language_valid(lexer_output, aux_tree, False, recursion_level+1) # Roda a recorrencia com a árvore atual e a lista de token do lexer atual
                     if is_valid:
                         if recursion_level==0:
-                            is_lenguage_valid(aux_lexer_output_to_print, aux_tree_to_print, True) # Se for válido, rodará a função novamente printando o passo a passo do parser para leitura
+                            is_language_valid(aux_lexer_output_to_print, aux_tree_to_print, True) # Se for válido, rodará a função novamente printando o passo a passo do parser para leitura
                         return True
 
                 else:
