@@ -47,7 +47,7 @@ ll1_table = [
     [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, "print'P", None, None, None, None, None, ],    # J
     [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, "return", None, None, None, None, ],    # K
     [None, None, None, None, None, None, None, None, None, None, None, None, None, "if'('P')'G'M", None, None, None, None, None, None, None, None, ],    # L
-    [None, None, None, None, None, None, None, "∑" , None, None, None, "∑" , None, "∑" ,["∑","else'G"], None, "∑", "∑", "∑", "∑", "∑", "∑", ],    # M
+    [None, None, None, None, None, None, None, "∑" , None, None, None, "∑" , None, "∑" ,["else'G", "∑"], None, "∑", "∑", "∑", "∑", "∑", "∑", ],    # M
     [None, None, None, None, None, None, None, "G'O", None, None, None, "G'O", None, "G'O", None, None, "G'O", "G'O", "G'O", "G'O", None, None, ],    # N
     [None, None, None, None, None, None, None, "N", None, None, None,  "N", None,  "N", None, None, "N", "N", "N", "N", "∑", None, ],    # O
     [None, "R'Q", None, None, None, None, None, None, None, None, None, "R'Q", None, None, None, "R'Q", None, None, None, None, None, None, ],    # P
