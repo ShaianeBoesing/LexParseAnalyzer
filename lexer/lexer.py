@@ -90,7 +90,7 @@ def lexer(file_name):
                     if acceptance_state_action[current_state] not in ["whitespace", "commentary"]:
                         token = acceptance_state_action[current_state]
                         output.append(token)
-                        print(token, end=" ")
+                        # print(token, end=" ")
                     current_state = 1
                     current_token_string = ""
                 else:
@@ -107,10 +107,9 @@ def lexer(file_name):
             if acceptance_state_action[current_state] not in ["whitespace", "commentary"]:
                 token = acceptance_state_action[current_state]
                 output.append(token)
-                print(token, end=" ")
+                # print(token, end=" ")
         else:
             print(f"Erro Léxico. Linha: {line_counter}, Coluna: {column_counter}. Token inválido encontrado: ", current_token_string)
             exit(0)
-    print()
     return output
 
