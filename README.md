@@ -7,5 +7,16 @@ Requisitos:
 
 Instruções:
 - Acesse a raiz do projeto
-- execute via terminal `python3 compiler_ish.py`
 
+Para executar os testes com erro léxico:
+- `python3 compiler_ish.py lexical-error1.lsi`
+- `python3 compiler_ish.py lexical-error2.lsi`
+- `python3 compiler_ish.py lexical-error3.lsi`
+
+Para executar os testes com erro sintática:
+- `python3 compiler_ish.py parser-error1.lsi`
+- `python3 compiler_ish.py parser-error2.lsi`
+- `python3 compiler_ish.py parser-error3.lsi`
+
+Para executar o teste correto:
+- `python3 compiler_ish.py 50plus_line_code.lsi`
