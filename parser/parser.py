@@ -97,7 +97,7 @@ def is_language_valid(lexer_output, tree=["A", "$"], prints = True, recursion_le
             # Caso o primeiro output do lexer não estiver em um output permitido pela tabela ll(1), significa que o programa é inválido.
             if (tree[0] == "$" and len(lexer_output)> 1) or (not lexer_output[0] in ll1_table_dict[tree[0]]):
                 if recursion_level==0:
-                    print(f"{' '.join(printable_tree)} $ ||||||||||||||||| {' '.join(lexer_output)}")
+                    print(f"{' '.join(printable_tree)} $ ||||||||||||||||| {' '.join(lexer_output)} $")
                 return False
 
             # Remove a primeira variável da arvore para trabalho.
@@ -123,7 +123,7 @@ def is_language_valid(lexer_output, tree=["A", "$"], prints = True, recursion_le
 
                 else:
                     if recursion_level==0:
-                        print(f"{' '.join(printable_tree)} $ ||||||||||||||||| {' '.join(lexer_output)}")
+                        print(f"{' '.join(printable_tree)} $ ||||||||||||||||| {' '.join(lexer_output)} $")
                     return False # Caso não há um retorno válido a partir da ambiguidade, significa que não é um programa válido
 
             # A cada não terminal ou terminal do caminho possível a partir da origin, se adiciona a arvore na ordem correspondente.
@@ -132,7 +132,7 @@ def is_language_valid(lexer_output, tree=["A", "$"], prints = True, recursion_le
 
         elif tree[0] != lexer_output[0] and tree[0] != "∑":
             if recursion_level==0:
-                print(f"{' '.join(printable_tree)} $ ||||||||||||||||| {' '.join(lexer_output)}")
+                print(f"{' '.join(printable_tree)} $ ||||||||||||||||| {' '.join(lexer_output)} $")
             return False
         # while true necessário para remover terminais com tokens caso há multiplos tokens em sequencia a serem eliminados.
         while True:
